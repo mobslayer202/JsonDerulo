@@ -1,0 +1,38 @@
+operator overloading []
+- access and edit branches
+
+Parse json file
+- create json data structure from json file
+- automatically type cast?
+
+Json data structure
+- create json
+- output json file
+
+
+
+What is json?
+    Data types: string, number, boolean, null, Array, object (key value pairs)
+    Can only store in Array or Object so, if want organize lot of data, use those.
+
+    Object:
+        -keys and values must be separated by double quotes
+        -key value pairs separated by comma
+
+
+Data structure idea:
+- std::string - string
+- int - number w/o decimal
+- double - number w/ decimal
+- std::vector - Array
+- std::unordered_map - Object
+# Need to make a variant which can be any of the possible types
+# Or a Tagged Union if that doesnt work
+
+Idea 1: 
+Parse json
+Store types as a variant
+- VariantX stores type vector<variantX>
+    - need to define vector<variantX> to make variantX
+    - need to define variantX to make vector<variantX>
+    - BRUH
