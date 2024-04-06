@@ -18,6 +18,7 @@ What is json?
     Object:
         -keys and values must be separated by double quotes
         -key value pairs separated by comma
+        -keys must be strings
 
 
 Data structure idea:
@@ -28,6 +29,7 @@ Data structure idea:
 - std::unordered_map - Object
 # Need to make a variant which can be any of the possible types
 # Or a Tagged Union if that doesnt work
+# or without special variant ds?
 
 Idea 1: 
 Parse json
@@ -36,3 +38,36 @@ Store types as a variant
     - need to define vector<variantX> to make variantX
     - need to define variantX to make vector<variantX>
     - BRUH
+
+Idea 2:
+Different data types in Json have different qualities.
+    - qualities hold for the immediate scope of the data type -- not deeper into nested data types
+Qualities:
+Object: 
+    - key and value separated by ':'
+    - key-value pairs separated by ','
+    - strings as keys
+    -- values all json data types
+    # randomness in value
+    # shown by open and close {}
+Array:
+    - each element separated by ','
+    -- elements all json data types
+    # shown by open and close []
+String:
+    - meaningful json characters lose meaning within scope
+    -- all characters allowed
+    # shown by open and close ""
+Number:
+    -- only numberical characters, '-' or '.'
+    ## outside everything, inside array, inside object value
+boolean / null:
+    - only true or false / only null
+
+Need to know which data type i'm currently in
+- keep track using stack GENIUS
+
+Implement error detection and parse separately?
+
+
+

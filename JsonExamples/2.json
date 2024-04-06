@@ -1,0 +1,28 @@
+{
+    "name": "John Doe",
+    "age": 30,
+    "isStudent": false,
+    "address": {
+      "street": "123 Main St",
+      "city": "Anytown",
+      "zip": "98765"
+    },
+    "hobbies": ["reading", "swimming", "coding"],
+    "scores": {
+      "math": 95,
+      "science": 88,
+      "history": 75
+    },
+    "languages": [
+      {
+        "name": "English",
+        "fluency": "fluent"
+      },
+      {
+        "name": "Spanish",
+        "fluency": "intermediate"
+      }
+    ],
+    "favoriteBooks": null
+}
+  
