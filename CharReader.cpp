@@ -32,6 +32,6 @@ bool CharReader::canGet(){
     return true;
 }
 
-CharReader::~CharReader(){ // Will this also delete the object as well?
+void CharReader::close(){ 
     jsonFStream.close();
 }

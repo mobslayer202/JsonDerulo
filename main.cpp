@@ -9,5 +9,6 @@ int main() {
         std::cout << CharReader::getNextChar();
     }
     std::cout << "poopy\n";
+    CharReader::close();
     return 0;
 }
