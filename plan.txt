@@ -159,7 +159,16 @@ ObjectHandler:
     }
 
 
+helper function:
+    handleDataType(): 
+        - returns handler for data type given char
+        - used when any data type can come next
 
+    convertJsonVal():
+        - converts data structure (unordered_map, etc) into jsonVal
+
+    getChar():
+        - gets next char in file
 
 
 
@@ -167,6 +176,14 @@ Implement error detection and parse separately?
 
 
 Idea 5: regex
+
+
+
+
+Comments:
+put include in .cpp or .hpp?
+what about duplicate includes?
+think about file and class organization later
 
 
 

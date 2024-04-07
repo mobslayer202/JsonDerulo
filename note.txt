@@ -5,5 +5,12 @@ switch case statements:
     not putting 'break;' at a case will make execution fall through to consecutive cases.
         - the reason why you can have multiple cases which do the same task w/o copying task over
 
+std::getline(stream, output) termination:
+    -when it sees an EOF, the stream will set a flag.
+        -still possible to get new values in output (all values after previous call and up to EOF)
+            -subsequent calls will not put anything into output
+
+need to define static member variables outside of class
+
 question:
 why isspace take int and return int? should take char and return bool no?
