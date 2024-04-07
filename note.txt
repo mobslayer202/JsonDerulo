@@ -1,7 +1,9 @@
 std::getline returns the input stream
     - the while loop terminates because when end of file is reached an EOF flag is set on the stream, loop evaluates to false
 
+switch case statements:
+    not putting 'break;' at a case will make execution fall through to consecutive cases.
+        - the reason why you can have multiple cases which do the same task w/o copying task over
 
-
-note:
+question:
 why isspace take int and return int? should take char and return bool no?

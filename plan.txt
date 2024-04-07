@@ -66,8 +66,107 @@ boolean / null:
 
 Need to know which data type i'm currently in
 - keep track using stack GENIUS
+- data type need to keep track of state its in to enforce its proper
+- OBSERVATION: outside of data type to create it (push()), inside data type to leave it (pop())
+
+Data Type states:
+Object:
+- before key (" or })
+- colon
+- before value
+- after value (, or })
+
+Array:
+- before value
+- comma
+- after value
+
+String:
+- 
+
+
+Idea 3:
+Use classes/objects to represent each data type when parsing?
+    - can just call within another object
+        - don't need stack of "enum data types" then
+            - how to handle file reading then?
+                - new class which all data types call which handle getting chars
+
+
+ObjectHandler:
+    constructor(&JsonVal, &TypeStack, state)
+    enum class state
+        operator++(): 
+            change state
+    unordered_map<JsonVal, JsonVal> progress;
+    string seenKey = null;
+    JsonVal seenVal = null;
+    store(): 
+        (call when value finished (key,value))
+    handle(char* ch):
+        if state == beforeKey:
+            if ch is not (" or }): throw error
+            if (ch is "): StringHandler key(JsonVal, TypeStack, state)
+
+
+Idea 4: whole - read char from file, store/errorhandle char based on current jsontype and jsonTypeState
+Parts:
+    read char from file
+    store partially completed jsontypes when moving on to deeper nested types
+    identify jsontype
+    create jsontype
+    keep track of jsonTypeState
+    keep track of progress for jsonType
+    error handle char
+    store completed jsonType
+    
+Structure 1: No type stack
+characterReader class:
+    char getChar(bool ignoreWhitespace);
+
+ObjectHandler:
+    enum class state
+        operator++(): 
+            change state
+    constructor(&JsonVal): set state
+    unordered_map<String, JsonVal> progress;
+    string seenKey = null;
+    JsonVal seenVal = null;
+
+    unordered_map<String, JsonVal> handle(){
+        char c = characterReader::getChar()
+        while (c != })
+            if state == beforeKey:
+                if ch is not (" or }): throw error
+                if (ch is "): 
+                    StringHandler key(JsonVal);
+                    seenKey = key.handle()
+                    this->state++;
+                else if (ch is }): // Empty object
+                    return progress;
+            if state == Colon:
+                if ch is not ':' : throw error
+                if ch is ':' : this->state++
+            if state == beforeValue:
+                if {:
+                if ":
+                if number:
+                if -:
+                if [:
+                
+
+            c = characterReader::getChar()
+    }
+
+
+
+
+
 
 Implement error detection and parse separately?
+
+
+Idea 5: regex
 
 
 

@@ -9,7 +9,7 @@ class Json{
         struct JsonVal;
         // ^
         using jsonval = std::variant<std::shared_ptr<std::vector<JsonVal>>, 
-            std::shared_ptr<std::unordered_map<JsonVal,JsonVal>>, 
+            std::shared_ptr<std::unordered_map<std::string,JsonVal>>, 
             int, 
             double, 
             std::string>;
@@ -53,4 +53,8 @@ class Json{
         //void printFormatted();
         //void makeFile(const char* filePath);
         //operator[]
+
+    private:
+        enum class DataType {Object, Array, String, Number, True, False, Null};
+
 };
