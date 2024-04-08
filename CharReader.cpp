@@ -17,11 +17,14 @@ void CharReader::init(const char* filePath){
 char CharReader::getNextChar(){
 
     if (buffer == "" or index == buffer.size()){
+        std::cout << "\n";
         std::getline(jsonFStream, buffer);
         index = 0;
     }
 
-    return buffer[index++];
+    char x = buffer[index++];
+    std::cout << x ;
+    return buffer[index];
 }
 
 bool CharReader::canGet(){
@@ -34,4 +37,19 @@ bool CharReader::canGet(){
 
 void CharReader::close(){ 
     jsonFStream.close();
+}
+
+
+char CharReader::seeNextChar(){
+    if (index+1 == buffer.size()){ // Assumes not at last line
+        char last = buffer[index];
+        std::string temp;
+        std::getline(jsonFStream, temp);
+
+        std::cout << last << "XX\n";
+        buffer = last + temp;
+        index = 0;
+    }
+
+    return buffer[index+1];
 }

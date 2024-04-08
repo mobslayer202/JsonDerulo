@@ -8,6 +8,9 @@ class CharReader{
         static bool canGet(); // MUST be called before getNextChar
         static void close();
 
+        
+        static char seeNextChar();
+
     private:
         static std::ifstream jsonFStream;
         static std::string buffer;
