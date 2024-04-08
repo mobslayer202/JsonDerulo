@@ -30,7 +30,7 @@ void ObjectHandler::nextState(){ // Shorten to casting increment way?
 Json::JsonVal ObjectHandler::handle(){
     auto object = std::make_shared<std::unordered_map<std::string, Json::JsonVal>>();
 
-    bool endReached = false;
+    bool objEndReached = false;
     std::string key;
     Json::JsonVal val;
     while (CharReader::canGet()){
@@ -54,7 +54,7 @@ Json::JsonVal ObjectHandler::handle(){
                 // if ((*object).find(key) != (*object).end()) {throw std::invalid_argument("INVALID JSON: Duplicate keys");}
             }
             else if (c == '}'){
-                endReached = true;
+                objEndReached = true;
                 break;
             }
             else{
@@ -79,7 +79,7 @@ Json::JsonVal ObjectHandler::handle(){
                 nextState();
             }
             else if (c == '}'){
-                endReached = true;
+                objEndReached = true;
                 break;
             }
             else {
@@ -98,7 +98,7 @@ Json::JsonVal ObjectHandler::handle(){
         }
     }
 
-    if (!endReached){
+    if (!objEndReached){
         throw std::invalid_argument("INVALID JSON: end of file reached before object end");
     }
     else {
