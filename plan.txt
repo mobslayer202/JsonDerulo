@@ -184,6 +184,10 @@ Comments:
 put include in .cpp or .hpp?
 what about duplicate includes?
 think about file and class organization later
+use inheritance
+can try defining own exception
+    - exception throwing class
+what happens if JsonVal in handlers + other return types created in handle() fall out of scope?
 
 
 

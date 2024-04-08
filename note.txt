@@ -10,7 +10,31 @@ std::getline(stream, output) termination:
         -still possible to get new values in output (all values after previous call and up to EOF)
             -subsequent calls will not put anything into output
 
-need to define static member variables outside of class
+need to define static member variables outside of class but within "same namespace scope" of class - GPT
+
+Reference return of operator++:
+    enum class MyEnum {
+        First,
+        Second,
+        Third,
+        Count  // Always keep this as the last element
+    };
+
+    MyEnum& operator++(MyEnum& e) {
+        if (e != MyEnum::Count) {
+            e = static_cast<MyEnum>(static_cast<int>(e) + 1);
+        }
+        return e;
+    }
+Allows it to be used "immediately": (MyEnum d = ++e;) - GPT
+The param makes it clear you incrementing MyEnum - GPT
+    - FAKE NEWS, NO PARAM ALLOWED EXCEPT INT!!!
 
 question:
 why isspace take int and return int? should take char and return bool no?
+why don't handle() functions red squiggly when no return?
+
+Complexities:
+data structure to represent the Json is weird
+Algorithm
+How best to structure code
