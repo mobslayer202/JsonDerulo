@@ -10,8 +10,10 @@ class NumberHandler{
         // Normal:
         //      -Accepts (digit)
         // AfterNormal:
-        //      -Accepts ('.', ) // Need to peek
+        //      -Accepts ('.', or anything) If anything, let parent handle it
         // AfterDecimal:
-        //      -Accepts (digit)
+        //      -Accepts (digit, or anything) If anything, let parent handle it
         enum class State {Start, Normal, AfterNormal, AfterDecimal};
+        State state = State::Start;
+        void nextState();
 };

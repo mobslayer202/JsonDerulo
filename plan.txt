@@ -174,6 +174,68 @@ helper function:
 
 Implement error detection and parse separately?
 
+Due to number data type and in small part (true, false, null) types, much better to not deal with first char
+of data type outside of dataTypeHandler
+{key : val}
+    - outside of objectHandler (index before '{') detect via peek next
+    - go inside (index is at '{')
+    - inside objectHandler increment index until peekNext() isnt whitespace and is '"'
+    - still outside stringHandler, spawn string handler
+    - when inside string handler and at second '"', increment to next char and return
+    - continue through ':' and value
+    - when see '}' at correct state, increment to next char and return
+[ele, ele, ele]
+    - outside of arrayHandler (index before '[') detect via peek next
+    - go inside (index is at '[')
+    - inside arrayHandler increment index until peekNext() isnt whitespace and is a data type indicator
+    - still outside datatypeHandler, spawn data type handler
+    - when inside datatypeHandler and at last char, increment to next char and return
+    - when see ']' at correct state, increment to next char and return
+"asdf"
+    - outside of string handler (index before '"') detect via peek next
+    - go inside (index is at '"')
+    - when see second '"' increment to next char and return
+1234  -1234  1234.1234  -1234.1234
+    - outside of number handler (index before '-' or digit) detect via peek next    
+    - go inside (index is at '-' or digit)
+    - when see that next is not an accepted value and its end of number, increment to next char and return
+true
+    - outside of true handler (index before 't') detect via peek next
+    - go inside (index is at 't')
+    - when at 'e', increment to next char and return
+false
+    - outside of false handler (index before 'f') detect via peek next
+    - go inside (index is at 'f')
+    - when at 'e', increment to next char and return
+null
+    - outside of true handler (index before 'n') detect via peek next
+    - go inside (index is at 'n')
+    - when at second 'l', increment to next char and return
+- "increment to next char and return" handled by parent when getting next?
+New structure of CharReader to get not 1 but 2 chars: V1
+    getChar(): now reloads the line when the NEXT not current index is out of bounds // Gonna run forever
+    canGet(): same
+    canPeek(): checks if the NEXT not current index is out of bounds - only false when last char bc getChar()
+    peekChar(): returns the next char which is guaranteed to be seen by ^
+New structure of CharReader to get not 1 but 2 chars: V2
+    Needs:
+        - get every char in the file
+        - peek next char for every char except last open
+            - for last one we only need to get it
+    Last one:
+Approaches:
+    return two chars (gotten, peeked)  
+        char[2] getTwo(), bool lastOne()
+        - have to do something weird for the very last one
+    two static member variables gotten, peaked
+        getChar(), canGetPeek()
+        - probably same as last approach
+    separate increment and getChar
+        increment(), getChar(), fileEnd()
+Cases:
+    handler calls CharReader to use the char and move on to next
+    handler calls CharReader to just see the next one - OR just see the current one without increment
+
 
 Idea 5: regex
 

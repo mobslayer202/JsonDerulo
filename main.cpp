@@ -9,8 +9,9 @@ int main() {
 
     std::cout << "poopy";
     CharReader::init("JsonExamples/2.json");
-    while (CharReader::canGet()){
-        getNext << CharReader::getNextChar();
+    while (!CharReader::fileEnd()){
+        std::cout << CharReader::getChar();
+        CharReader::increment();
     }
     std::cout << "poopy\n";
     CharReader::close();

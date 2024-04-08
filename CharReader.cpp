@@ -15,39 +15,35 @@ void CharReader::init(const char* filePath){
     CharReader::index = 0;
 }
 
-char CharReader::getNextChar(){
-
-    if (buffer == "" or index == buffer.size()){
-        std::getline(jsonFStream, buffer);
-        index = 0;
-    }
-
-    return buffer[index++];
-}
-
-bool CharReader::canGet(){
-
-    if (jsonFStream.eof() and index == buffer.size()){
-        return false;
-    }
-    return true;
-}
-
 void CharReader::close(){ 
 
     jsonFStream.close();
 }
 
+char CharReader::getChar(){
+    return buffer[index];
+}
 
-bool CharReader::endOfLine(){
+void CharReader::increment(){
 
-    if (index+1 == buffer.size()){ 
+    // If just started or index out of bounds, refresh buffer with new data
+    // Put index at the start of new data
+    if (buffer == "" or index == buffer.size()){
+        std::getline(jsonFStream, buffer);
+        index = 0;
+    }
+    else{
+        // Increment
+        index++;
+    }
+}
+
+bool CharReader::fileEnd(){
+
+    // If on last buffer and index out of bounds
+    if (jsonFStream.eof() and index == buffer.size()){
         return true;
     }
     return false;
 }
 
-char CharReader::seeNext(){
-
-    return buffer[index+1];
-}
