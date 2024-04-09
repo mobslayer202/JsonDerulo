@@ -31,6 +31,37 @@ Data structure idea:
 # Or a Tagged Union if that doesnt work
 # or without special variant ds?
 
+Initial brainstorm in Json.hpp file:
+// Tasks -----------------------------------------
+// - Detect Valid Json
+//      - valid data types in json
+//          #1 double (no int -GPT, can be negative, can have e or E), string, bool, null, array, object
+//          #2 only strings can be keys of object
+//      - string format
+//          #3 strings have double quotes around
+//          4 no numbers at start of string
+//          5 "special characters" are excaped
+//      - valid [] and {} positions
+//          #6 every open must close
+//      #7 commas separate elements in [] and {}
+// - Parse Json
+// ------------------------------------------------
+// Implementation --------------------------------
+// - Rules: Tasks (1,2,3,6,7) - Disregard (e or E for numbers, 5: special char in string, 4: numbers at start of string)
+//
+// Go through all non whitespace character left to right, top to bottom:
+//      If [ or {: after dealt with inside, must see matching ] or }
+//      If -: must be followed by number OR must be wrapped in ""
+//      If number: must be outside object/array OR must be object value OR must be array element
+//      If " : must see matching "  after characters inside
+//      If , : must be inside object or array, must be between data types (before: ", -, number, [, { )
+//      If ':' : must be after string, before data type
+//      If other char: must be true or false OR be string (within "")
+//
+// Observation
+//      "Go Through" rules dont apply when char wrapped in ""
+//      Should also account for 
+
 Idea 1: 
 Parse json
 Store types as a variant
@@ -237,6 +268,10 @@ Cases:
     handler calls CharReader to just see the next one - OR just see the current one without increment
 
 
+Handlers shall 
+    -start at the first char of their data type
+    -end one char after the last char of their data type
+
 Idea 5: regex
 
 
@@ -250,6 +285,8 @@ use inheritance
 can try defining own exception
     - exception throwing class
 what happens if JsonVal in handlers + other return types created in handle() fall out of scope?
-
+bug: only number with no padding at end will need to increment past end of file but actually wont and except.
+bug: incrementing to after end of data structure will go past bound if data type is top level and no padding
+    - don't matter for array, obj, string
 
 

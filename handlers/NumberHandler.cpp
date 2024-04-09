@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "NumberHandler.hpp"
 #include "CharReader.hpp"
 
@@ -16,11 +18,61 @@ void NumberHandler::nextState(){
 }
 
 Json::JsonVal NumberHandler::handle(){
-    double number = 0;
+    std::string numberString;
 
     bool numEndReached = false;
-    while (CharReader::canGet()){
+    while (!CharReader::fileEnd()){
 
-        char c = CharReader::
+        // Current Char starts at first char of number
+        char c = CharReader::getChar();
+
+        if (this->state == State::Start){
+            if (c == '-' or std::isdigit(c)){
+                nextState();
+                numberString += c;
+            }
+            else {
+                throw std::invalid_argument("INVALID JSON: Number/Start"); 
+            }
+        }
+        else if (this->state == State::Normal){
+            if (std::isdigit(c)){
+                nextState();
+                numberString += c;
+            }
+            else {
+                throw std::invalid_argument("INVALID JSON: Number/Normal"); 
+            }
+        }
+        else if (this->state == State::AfterNormal){
+            if (c == '.'){
+                nextState();
+                numberString += c;
+            }
+            else {
+                numEndReached = true;
+                break; 
+            }
+        }
+        else if (this->state == State::AfterDecimal){
+            if (std::isdigit(c)){
+                numberString += c;
+            }
+            else {
+                numEndReached = true;
+                break;
+            }
+        }
+
+        CharReader::increment();
+    }
+
+    if (!numEndReached){
+        throw std::invalid_argument("INVALID JSON: end of file reached before number end"); // What if only number? - last char is part of number - bug
+    }
+    else {
+        Json::JsonVal result;
+        result.value = std::stod(numberString);
+        return result;
     }
 }

@@ -4,6 +4,7 @@
 #include "ObjectHandler.hpp"
 #include "CharReader.hpp"
 #include "HandlerHelper.hpp"
+#include "StringHandler.hpp"
 
 void ObjectHandler::nextState(){ // Shorten to casting increment way?
     switch(this->state){
@@ -33,13 +34,13 @@ Json::JsonVal ObjectHandler::handle(){
     bool objEndReached = false;
     std::string key;
     Json::JsonVal val;
-    while (CharReader::canGet()){
-        
-        char c = CharReader::getNextChar();
 
-        /*if (c == '}'){ // Incorrect: finishes object even if '}' is in an invalid spot
-            break;
-        }*/
+    while (!CharReader::fileEnd()){
+        
+        // Current Char starts at '{'
+        // Increment to right after
+        CharReader::increment(); 
+        char c = CharReader::getChar(); // Starts right after '{'
 
         // Skip all spaces in object; none matter except in other data type(String)
         if (std::isspace(c)){ // Where is <cctype> even coming from...
@@ -49,7 +50,8 @@ Json::JsonVal ObjectHandler::handle(){
         // Deal with char based on state
         if (this->state == State::Start){ // If else vs switch? switch "break;" will be confused = will need scuffed workaround
             if (c == '"'){
-                // key = StringHandler::handle().value;
+                StringHandler sHandler;
+                key = sHandler.handle().value; 
                 // nextState();
                 // if ((*object).find(key) != (*object).end()) {throw std::invalid_argument("INVALID JSON: Duplicate keys");}
             }
@@ -102,6 +104,8 @@ Json::JsonVal ObjectHandler::handle(){
         throw std::invalid_argument("INVALID JSON: end of file reached before object end");
     }
     else {
+        // Increment to one char after '}'
+        CharReader::increment(); 
         Json::JsonVal result; // what happens when fall out of scope?
         result.value = object; // What happens when fall out of scope?
         return result;

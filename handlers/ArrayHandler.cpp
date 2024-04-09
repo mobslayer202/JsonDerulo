@@ -20,9 +20,12 @@ Json::JsonVal ArrayHandler::handle(){
     auto array = std::make_shared<std::vector<Json::JsonVal>>(); // Don't get what this does
 
     bool arrEndReached = false;
-    while (CharReader::canGet()){
+    while (!CharReader::fileEnd()){
         
-        char c = CharReader::getNextChar();
+        // Current Char starts at '['
+        // Increment to right after
+        CharReader::increment(); 
+        char c = CharReader::getChar();
 
         // Skip all spaces in array; none matter except in other data type(String)
         if (std::isspace(c)){ // Where is <cctype> even coming from...
@@ -61,6 +64,8 @@ Json::JsonVal ArrayHandler::handle(){
         throw std::invalid_argument("INVALID JSON: end of file reached before array end");
     }
     else{
+        // Increment to one char after ']'
+        CharReader::increment(); 
         Json::JsonVal result; // what happens when fall out of scope?
         result.value = array; // What happens when fall out of scope?
         return result;
