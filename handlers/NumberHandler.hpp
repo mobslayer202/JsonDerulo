@@ -2,7 +2,7 @@
 
 class NumberHandler{
     public:
-        Json::JsonVal handle();
+        double handle();
 
     private:
         // Start:

@@ -2,7 +2,7 @@
 
 class ArrayHandler{
     public:
-        Json::JsonVal handle();
+        std::shared_ptr<std::vector<Json::JsonVal>> handle();
 
     private:
         // Start:

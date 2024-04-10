@@ -2,7 +2,7 @@
 
 class ObjectHandler{
     public:
-        Json::JsonVal handle();
+        std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> handle();
     
     private:
         // States and acceptance:

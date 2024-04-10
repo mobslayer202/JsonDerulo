@@ -8,25 +8,26 @@
 #include "BoolNullHandler.hpp"
 
 Json::JsonVal HandlerHelper::handleAny(char c){
+    Json::JsonVal result; // What happen when fall out of scope?
     if (c == '-' or std::isdigit(c)){
         NumberHandler nHandler;
-        return nHandler.handle();
+        result.value = nHandler.handle();
     }
     switch (c) {
         case '{':
             ObjectHandler oHandler;
-            return oHandler.handle();
+            result.value = oHandler.handle();
         case '[':
             ArrayHandler aHandler;
-            return aHandler.handle();
+            result.value = aHandler.handle();
         case '"':
             StringHandler sHandler;
-            return sHandler.handle();
+            result.value = sHandler.handle();
         case 't':
         case 'f':
         case 'n':
             BoolNullHandler bnHandler;
-            return bnHandler.handle();
+            result.value = bnHandler.handle();
         default:
             throw std::invalid_argument("INVALID JSON"); 
     }

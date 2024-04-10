@@ -17,7 +17,7 @@ void NumberHandler::nextState(){
     }
 }
 
-Json::JsonVal NumberHandler::handle(){
+double NumberHandler::handle(){
     std::string numberString;
 
     bool numEndReached = false;
@@ -71,8 +71,6 @@ Json::JsonVal NumberHandler::handle(){
         throw std::invalid_argument("INVALID JSON: end of file reached before number end"); // What if only number? - last char is part of number - bug
     }
     else {
-        Json::JsonVal result;
-        result.value = std::stod(numberString);
-        return result;
+        return std::stod(numberString);
     }
 }

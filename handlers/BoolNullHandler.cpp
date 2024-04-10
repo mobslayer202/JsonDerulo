@@ -3,7 +3,7 @@
 #include "BoolNullHandler.hpp"
 #include "CharReader.hpp"
 
-Json::JsonVal BoolNullHandler::handle(){
+bool BoolNullHandler::handle(){
     std::string boolNullString;
     std::string expected;
 
@@ -43,14 +43,14 @@ Json::JsonVal BoolNullHandler::handle(){
         throw std::invalid_argument("INVALID JSON: illegal word, thought it was '"+expected+"' but its not"); // W operator overloading
     }
     else {
-        Json::JsonVal result;
+        bool result;
         if (expected == "true"){
 
-            result.value = true;
+            result = true;
         }
         else if (expected == "false"){
 
-            result.value = false;
+            result = false;
         }
         // do nothing if null?
         

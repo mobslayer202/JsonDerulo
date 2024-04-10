@@ -3,5 +3,5 @@
 class BoolNullHandler {
 
     public:
-        Json::JsonVal handle();
+        bool handle();
 };

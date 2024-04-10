@@ -2,5 +2,5 @@
 
 class StringHandler {
     public:
-        Json::JsonVal handle();
+        std::string handle();
 };

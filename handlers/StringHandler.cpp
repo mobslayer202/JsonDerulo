@@ -3,7 +3,7 @@
 #include "StringHandler.hpp"
 #include "CharReader.hpp"
 
-Json::JsonVal StringHandler::handle(){
+std::string StringHandler::handle(){
     std::string seenString;
 
     bool strEndReached = false;
@@ -29,8 +29,6 @@ Json::JsonVal StringHandler::handle(){
     else{
         // Increment to one char after '"'
         CharReader::increment(); 
-        Json::JsonVal result; // what happens when fall out of scope?
-        result.value = seenString; // What happens when fall out of scope?
-        return result;
+        return seenString;
     }
 }

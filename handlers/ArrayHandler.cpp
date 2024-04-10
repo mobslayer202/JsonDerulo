@@ -16,7 +16,7 @@ void ArrayHandler::nextState(){
     }
 }
 
-Json::JsonVal ArrayHandler::handle(){
+std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
     auto array = std::make_shared<std::vector<Json::JsonVal>>(); // Don't get what this does
 
     bool arrEndReached = false;
@@ -66,8 +66,6 @@ Json::JsonVal ArrayHandler::handle(){
     else{
         // Increment to one char after ']'
         CharReader::increment(); 
-        Json::JsonVal result; // what happens when fall out of scope?
-        result.value = array; // What happens when fall out of scope?
-        return result;
+        return array;
     }
 }

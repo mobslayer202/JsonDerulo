@@ -28,7 +28,7 @@ void ObjectHandler::nextState(){ // Shorten to casting increment way?
 
 // can have an empty string as a key
 // make sure to handle duplicate keys
-Json::JsonVal ObjectHandler::handle(){
+std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::handle(){
     auto object = std::make_shared<std::unordered_map<std::string, Json::JsonVal>>();
 
     bool objEndReached = false;
@@ -51,7 +51,7 @@ Json::JsonVal ObjectHandler::handle(){
         if (this->state == State::Start){ // If else vs switch? switch "break;" will be confused = will need scuffed workaround
             if (c == '"'){
                 StringHandler sHandler;
-                key = sHandler.handle().value; 
+                key = sHandler.handle(); 
                 // nextState();
                 // if ((*object).find(key) != (*object).end()) {throw std::invalid_argument("INVALID JSON: Duplicate keys");}
             }
@@ -106,8 +106,6 @@ Json::JsonVal ObjectHandler::handle(){
     else {
         // Increment to one char after '}'
         CharReader::increment(); 
-        Json::JsonVal result; // what happens when fall out of scope?
-        result.value = object; // What happens when fall out of scope?
-        return result;
+        return object;
     }
 }
