@@ -7,6 +7,7 @@
 std::ifstream CharReader::jsonFStream; // Failed stream
 std::string CharReader::buffer = "";
 int CharReader::index = 0;
+bool CharReader::pastEnd = false;
 
 void CharReader::init(const char* filePath){
     
@@ -21,6 +22,7 @@ void CharReader::close(){
 }
 
 char CharReader::getChar(){
+
     return buffer[index];
 }
 
@@ -29,6 +31,14 @@ void CharReader::increment(){
     // If just started or at last index of buffer, refresh buffer with new data
     // Put index at the start of new data
     if (buffer == "" or index == buffer.size()-1){
+        
+        // If on last buffer and 
+        // trying to increment to next char despite it being "" or last char
+        //      mark that you are past end of file
+        if (jsonFStream.eof()){
+            pastEnd = true;
+        }
+
         std::getline(jsonFStream, buffer);
         index = 0;
     }
@@ -40,10 +50,7 @@ void CharReader::increment(){
 
 bool CharReader::fileEnd(){
 
-    // If on last buffer and index out of bounds
-    if (jsonFStream.eof() and index == buffer.size()){
-        return true;
-    }
-    return false;
+    // If on last buffer and last index of buffer
+    return pastEnd;
 }
 

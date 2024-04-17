@@ -18,11 +18,11 @@ int main() {
     std::cout << "poopy\n";
     CharReader::close();
 
-    Json d("JsonExamples/my.json");
+    //Json d("JsonExamples/my.json");
     //d.makeFile("JsonExamples/result.json");
 
     
 
-    std::cout << sizeof(d) << std::endl;
+    //std::cout << sizeof(d) << std::endl;
     return 0;
 }
