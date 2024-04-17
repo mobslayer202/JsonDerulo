@@ -106,7 +106,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
         else if (this->state == State::B4Val){
             LOGC("ObjectHandler/B4Val: B4Handle -> '", c, "'")
             val = HandlerHelper::handleAny(c);
-            LOGC("ObjectHandler/B4Val: AfterHandle -> '", c, "'")
+            LOGC("ObjectHandler/B4Val: AfterHandle -> '", CharReader::getChar(), "'")
         }
         else if (this->state == State::AfterVal){
 
@@ -132,7 +132,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 StringHandler sHandler;
                 key = sHandler.handle(); 
                 nextState();
-                LOGC("ObjectHandler/AfterComma: AfterHandle -> '", c, "'")
+                LOGC("ObjectHandler/AfterComma: AfterHandle -> '", CharReader::getChar(), "'")
 
                 // Make sure key is not duplicate
                 if ((*object).find(key) != (*object).end()) {

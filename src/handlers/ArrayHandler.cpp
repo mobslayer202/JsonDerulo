@@ -67,7 +67,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
             Json::JsonVal element = HandlerHelper::handleAny(c);
             (*array).push_back(element);
             nextState();
-            LOGC("ArrayHandler/Start: Element Gotten -> '", c, "'")
+            LOGC("ArrayHandler/Start: Element Gotten -> '", CharReader::getChar(), "'")
         }
         else if (this->state == State::AfterElement){
             
@@ -92,7 +92,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
             Json::JsonVal element = HandlerHelper::handleAny(c);
             (*array).push_back(element);
             nextState();
-            LOGC("ArrayHandler/AfterComma: Element Gotten -> '", c, "'")
+            LOGC("ArrayHandler/AfterComma: Element Gotten -> '", CharReader::getChar(), "'")
         }
     }
 
