@@ -49,8 +49,16 @@ double NumberHandler::handle(){
                 numberString += c;
             }
             else {
-                std::string sawChar(1, c);
-                throw std::invalid_argument("INVALID JSON: Number/Normal -> '" + sawChar + "'"); 
+                if (numberString[0] == '-'){
+                    std::string sawChar(1, c);
+                    throw std::invalid_argument("INVALID JSON: Number/Normal -> '" + sawChar + "'"); 
+                }
+                else {
+                    LOGC("NumberHandler/Normal: End Reached -> '", c, "'")
+                    numEndReached = true;
+                    break; 
+                }
+                
             }
         }
         else if (this->state == State::AfterNormal){

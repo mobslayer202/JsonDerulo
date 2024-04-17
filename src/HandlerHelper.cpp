@@ -17,44 +17,46 @@ Json::JsonVal HandlerHelper::handleAny(char c){
         NumberHandler nHandler;
         result.value = nHandler.handle();
     }
-    
-    switch (c) {
-        case '{':
-            { // Scope without function or class. Whole switch statement is one scope, so need to 
-                // make scopes in each Case to have each case to be one scope.
-                // Need scope to avoid "cross initialization"
-                LOG("HandlerHelper: Handling Object")
-                ObjectHandler oHandler;
-                result.value = oHandler.handle();
-                break;
-            }
-        case '[':
-            {   
-                LOG("HandlerHelper: Handling Array")
-                ArrayHandler aHandler;
-                result.value = aHandler.handle();
-                break;
-            }
-        case '"':
-            {
-                LOG("HandlerHelper: Handling String")
-                StringHandler sHandler;
-                result.value = sHandler.handle();
-                break;
-            }
-        case 't':
-        case 'f':
-        case 'n':
-            {
-                LOG("HandlerHelper: Handling BoolNull")
-                BoolNullHandler bnHandler;
-                result.value = bnHandler.handle();
-                break;
-            }
-        default:
-            std::string sawChar(1, c);
-            throw std::invalid_argument("INVALID JSON: HandlerHelper -> '" + sawChar + "'"); 
+    else{
+        switch (c) {
+            case '{':
+                { // Scope without function or class. Whole switch statement is one scope, so need to 
+                    // make scopes in each Case to have each case to be one scope.
+                    // Need scope to avoid "cross initialization"
+                    LOG("HandlerHelper: Handling Object")
+                    ObjectHandler oHandler;
+                    result.value = oHandler.handle();
+                    break;
+                }
+            case '[':
+                {   
+                    LOG("HandlerHelper: Handling Array")
+                    ArrayHandler aHandler;
+                    result.value = aHandler.handle();
+                    break;
+                }
+            case '"':
+                {
+                    LOG("HandlerHelper: Handling String")
+                    StringHandler sHandler;
+                    result.value = sHandler.handle();
+                    break;
+                }
+            case 't':
+            case 'f':
+            case 'n':
+                {
+                    LOG("HandlerHelper: Handling BoolNull")
+                    BoolNullHandler bnHandler;
+                    result.value = bnHandler.handle();
+                    break;
+                }
+            default:
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: HandlerHelper -> '" + sawChar + "'"); 
+        }
     }
+    
     LOG("HandlerHelper: Finished")
     return result;
 }
