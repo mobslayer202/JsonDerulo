@@ -37,10 +37,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
 
     while (!CharReader::fileEnd()){
         
-        // Current Char starts at '{'
-        // Increment to right after
-        CharReader::increment(); 
-        char c = CharReader::getChar(); // Starts right after '{'
+        char c = CharReader::getChar();
 
         // Skip all spaces in object; none matter except in other data type(String)
         if (std::isspace(c)){ // Where is <cctype> even coming from...
@@ -49,11 +46,22 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
 
         // Deal with char based on state
         if (this->state == State::Start){ // If else vs switch? switch "break;" will be confused = will need scuffed workaround
+
+            // Current Char starts at '{'
+            // Increment to right after
+            CharReader::increment(); 
+            c = CharReader::getChar(); // Starts right after '{'
+
             if (c == '"'){
                 StringHandler sHandler;
                 key = sHandler.handle(); 
-                // nextState();
-                // if ((*object).find(key) != (*object).end()) {throw std::invalid_argument("INVALID JSON: Duplicate keys");}
+                nextState();
+
+                // Make sure key is not duplicate
+                if ((*object).find(key) != (*object).end()) {
+
+                    throw std::invalid_argument("INVALID JSON: Duplicate keys");
+                }
             }
             else if (c == '}'){
                 objEndReached = true;
@@ -67,6 +75,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
         else if (this->state == State::Colon){
             if (c == ':'){
                 nextState();
+                CharReader::increment(); 
             }
             else{
                 std::string sawChar(1, c);
@@ -81,6 +90,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
             (*object)[key] = val;
             if (c == ','){
                 nextState();
+                CharReader::increment(); 
             }
             else if (c == '}'){
                 objEndReached = true;
@@ -93,9 +103,14 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
         }
         else if (this->state == State::AfterComma){
             if (c == '"'){
-                // key = StringHandler::handle().value;
-                // nextState();
-                // if (object.find(key) != object.end()) {throw std::invalid_argument("INVALID JSON: Duplicate keys");}
+                StringHandler sHandler;
+                key = sHandler.handle(); 
+                nextState();
+                // Make sure key is not duplicate
+                if ((*object).find(key) != (*object).end()) {
+
+                    throw std::invalid_argument("INVALID JSON: Duplicate keys");
+                }
             }
             else{
                 std::string sawChar(1, c);

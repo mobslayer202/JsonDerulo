@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 
 #include "StringHandler.hpp"
 #include "CharReader.hpp"
@@ -29,6 +30,7 @@ std::string StringHandler::handle(){
     else{
         // Increment to one char after '"'
         CharReader::increment(); 
+        std::cout << seenString << std::endl;
         return seenString;
     }
 }

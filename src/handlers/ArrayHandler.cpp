@@ -23,10 +23,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
     bool arrEndReached = false;
     
     while (!CharReader::fileEnd()){
-        
-        // Current Char starts at '['
-        // Increment to right after
-        CharReader::increment(); 
+
         char c = CharReader::getChar();
 
         // Skip all spaces in array; none matter except in other data type(String)
@@ -35,6 +32,12 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
         }
         
         if (this->state == State::Start){
+
+            // Current Char starts at '['
+            // Increment to right after
+            CharReader::increment(); 
+            c = CharReader::getChar();
+
             if (c == ']'){
                 arrEndReached = true;
                 break;
@@ -44,12 +47,15 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
             nextState();
         }
         else if (this->state == State::AfterElement){
+            
             if (c == ']'){
                 arrEndReached = true;
                 break;
             }
             else if (c == ','){
+                std::cout << "saw comma!" << std::endl;
                 nextState();
+                CharReader::increment(); 
             }
             else{
                 std::string sawChar(1, c);

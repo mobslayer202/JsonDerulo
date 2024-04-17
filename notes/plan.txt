@@ -272,6 +272,10 @@ Handlers shall
     -start at the first char of their data type
     -end one char after the last char of their data type
 
+    Reason for these? How to handle numbers 
+        - Need to be in number handler starting with first char
+        - Need to be one char after last char of number to know it ended
+
 Idea 5: regex
 
 
@@ -305,6 +309,7 @@ If I return a type which is not Json, i wont have control of the operation
 
 
 var = json(string, number, bool or null) : set as (string, number, bool or null)
+    - Conversion Operator - Cherno
 
 operations:
     to create new Json:
@@ -320,6 +325,15 @@ operations:
 
 Output json datastructure to file plan
 
+
+
+Logging system plan:
+    Use macros
+        - to clean up and to allow disabling
+    shorten throwing error spots in Array and Object handlers and remove redundancies
+    Log every step of the parse
+    Turn separate disabling for each handler?
+    separate file to control the #if's
 
 
 Comments:
