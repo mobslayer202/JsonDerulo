@@ -60,7 +60,8 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 break;
             }
             else{
-                throw std::invalid_argument("INVALID JSON: Object/Start"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Object/Start -> '" + sawChar + "'"); 
             }
         }
         else if (this->state == State::Colon){
@@ -68,7 +69,8 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 nextState();
             }
             else{
-                throw std::invalid_argument("INVALID JSON: Object/Colon"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Object/Colon -> '" + sawChar + "'"); 
             }
         }
         else if (this->state == State::B4Val){
@@ -85,7 +87,8 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 break;
             }
             else {
-                throw std::invalid_argument("INVALID JSON: Object/AfterVal"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Object/AfterVal -> '" + sawChar + "'"); 
             }
         }
         else if (this->state == State::AfterComma){
@@ -95,7 +98,8 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 // if (object.find(key) != object.end()) {throw std::invalid_argument("INVALID JSON: Duplicate keys");}
             }
             else{
-                throw std::invalid_argument("INVALID JSON: Object/AfterComma"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Object/AfterComma -> '" + sawChar + "'"); 
             }
         }
     }

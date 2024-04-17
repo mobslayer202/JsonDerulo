@@ -52,7 +52,8 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
                 nextState();
             }
             else{
-                throw std::invalid_argument("INVALID JSON: Array/AfterElement"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Array/AfterElement -> '" + sawChar + "'"); 
             }
         }
         else if (this->state == State::AfterComma){

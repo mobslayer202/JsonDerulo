@@ -32,7 +32,8 @@ double NumberHandler::handle(){
                 numberString += c;
             }
             else {
-                throw std::invalid_argument("INVALID JSON: Number/Start"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Number/Start -> '" + sawChar + "'"); 
             }
         }
         else if (this->state == State::Normal){
@@ -41,7 +42,8 @@ double NumberHandler::handle(){
                 numberString += c;
             }
             else {
-                throw std::invalid_argument("INVALID JSON: Number/Normal"); 
+                std::string sawChar(1, c);
+                throw std::invalid_argument("INVALID JSON: Number/Normal -> '" + sawChar + "'"); 
             }
         }
         else if (this->state == State::AfterNormal){
