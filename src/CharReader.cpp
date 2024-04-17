@@ -26,9 +26,9 @@ char CharReader::getChar(){
 
 void CharReader::increment(){
 
-    // If just started or index out of bounds, refresh buffer with new data
+    // If just started or at last index of buffer, refresh buffer with new data
     // Put index at the start of new data
-    if (buffer == "" or index == buffer.size()){
+    if (buffer == "" or index == buffer.size()-1){
         std::getline(jsonFStream, buffer);
         index = 0;
     }

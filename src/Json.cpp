@@ -18,6 +18,8 @@ Json::Json(const char* filePath){
 }
 
 void Json::makeFile(const char* filePath){
-    std::ofstream output("JsonExamples/result.json");
-    
+    //std::ofstream output("JsonExamples/result.json");
+    auto jsonArr = std::get<std::shared_ptr<std::vector<JsonVal>>>(data.value);
+    auto d = std::get<std::string>((*jsonArr)[0].value);
+    std::cout << d;
 }

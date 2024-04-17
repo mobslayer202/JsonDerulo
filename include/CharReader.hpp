@@ -7,7 +7,7 @@ class CharReader{
         static void init(const char* filePath);
         static void close();
         static char getChar();
-        static void increment();
+        static void increment(); // Increment index to location of next valid char
 
         // If true:
         //      - no point in getChar() -> index out of bounds

@@ -10,7 +10,7 @@ int main() {
     std::ofstream getNext("test/get.txt");
 
     std::cout << "poopy";
-    CharReader::init("JsonExamples/1.json");
+    CharReader::init("JsonExamples/my.json");
     while (!CharReader::fileEnd()){
         std::cout << CharReader::getChar();
         CharReader::increment();
@@ -18,7 +18,10 @@ int main() {
     std::cout << "poopy\n";
     CharReader::close();
 
-    Json::JsonVal d;
+    Json d("JsonExamples/my.json");
+    //d.makeFile("JsonExamples/result.json");
+
+    
 
     std::cout << sizeof(d) << std::endl;
     return 0;

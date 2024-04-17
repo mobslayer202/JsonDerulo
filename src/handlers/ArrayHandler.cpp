@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 
 #include "ArrayHandler.hpp"
 #include "CharReader.hpp"
@@ -31,7 +32,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
         if (std::isspace(c)){ // Where is <cctype> even coming from...
             continue;
         }
-
+        std::cout << "ArrayHandler: '" << c << "'" << std::endl;
         if (this->state == State::Start){
             if (c == ']'){
                 arrEndReached = true;

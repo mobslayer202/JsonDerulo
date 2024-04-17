@@ -1,4 +1,5 @@
 #include <stdexcept>
+#include <iostream>
 
 #include "HandlerHelper.hpp"
 #include "ObjectHandler.hpp"
@@ -8,11 +9,13 @@
 #include "BoolNullHandler.hpp"
 
 Json::JsonVal HandlerHelper::handleAny(char c){
+    std::cout << "'" << c << "'" << std::endl;
     Json::JsonVal result; // What happen when fall out of scope?
     if (c == '-' or std::isdigit(c)){
         NumberHandler nHandler;
         result.value = nHandler.handle();
     }
+    std::cout << "'" << c << "'" << std::endl;
     switch (c) {
         case '{':
             { // Scope without function or class. Whole switch statement is one scope, so need to 
@@ -43,7 +46,7 @@ Json::JsonVal HandlerHelper::handleAny(char c){
                 break;
             }
         default:
-            throw std::invalid_argument("INVALID JSON"); 
+            throw std::invalid_argument("INVALID JSON: HandlerHelper"); 
     }
     return result;
 }
