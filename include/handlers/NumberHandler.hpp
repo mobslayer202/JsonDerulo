@@ -11,11 +11,9 @@ class NumberHandler{
         //      -Accepts ('-', digit)
         // Normal:
         //      -Accepts (digit)
-        // AfterNormal:
-        //      -Accepts ('.', or anything) If anything, let parent handle it
         // AfterDecimal:
         //      -Accepts (digit, or anything) If anything, let parent handle it
-        enum class State {Start, Normal, AfterNormal, AfterDecimal};
+        enum class State {Start, Normal, AfterDecimal};
         State state = State::Start;
         void nextState();
 };

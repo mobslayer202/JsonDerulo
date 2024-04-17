@@ -336,6 +336,9 @@ Logging system plan:
     separate file to control the #if's
 
 
+Better book keeping: for each handler state, explain clearly whats allowed and whats not
+
+
 Comments:
 put include in .cpp or .hpp?
 what about duplicate includes?

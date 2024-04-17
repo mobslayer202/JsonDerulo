@@ -11,11 +11,7 @@ void NumberHandler::nextState(){
             this->state = State::Normal;
             break;
         case State::Normal:
-            LOG("NumberHandler: Normal -> AfterNormal")
-            this->state = State::AfterNormal;
-            break;
-        case State::AfterNormal:
-            LOG("NumberHandler: AfterNormal -> AfterDecimal")
+            LOG("NumberHandler: Normal -> AfterDecimal")
             this->state = State::AfterDecimal;
             break;
     }
@@ -42,37 +38,44 @@ double NumberHandler::handle(){
                 throw std::invalid_argument("INVALID JSON: Number/Start -> '" + sawChar + "'"); 
             }
         }
+        // Starting with char right after digit or '-'
+        // Should see digit, '.', or something else
         else if (this->state == State::Normal){
             LOGC("NumberHandler/Normal: -> '", c, "'")
             if (std::isdigit(c)){
+                numberString += c;
+            }
+            else if (c == '.'){
+                LOGC("NumberHandler/Normal: -> '", c, "'")
+                char last = numberString[numberString.size()-1];
+
+                // Throw error if '.' is right after '-'
+                if(!std::isdigit(last)){ 
+                    std::string sawChar(1, c);
+                    throw std::invalid_argument("INVALID JSON: Number/Normal -> '" + sawChar + "'"); 
+                }
+
                 nextState();
                 numberString += c;
             }
             else {
-                if (numberString[0] == '-'){
+                char last = numberString[numberString.size()-1];
+
+                // Throw error if INVALID_CHAR (not '.' or digit) is right after '-'
+                if(!std::isdigit(last)){ 
                     std::string sawChar(1, c);
                     throw std::invalid_argument("INVALID JSON: Number/Normal -> '" + sawChar + "'"); 
                 }
+                // No decimal number
                 else {
                     LOGC("NumberHandler/Normal: End Reached -> '", c, "'")
                     numEndReached = true;
                     break; 
                 }
-                
             }
         }
-        else if (this->state == State::AfterNormal){
-            if (c == '.'){
-                LOGC("NumberHandler/AfterNormal: -> '", c, "'")
-                nextState();
-                numberString += c;
-            }
-            else {
-                LOGC("NumberHandler/AfterNormal: End Reached -> '", c, "'")
-                numEndReached = true;
-                break; 
-            }
-        }
+        // Starting with char right after '.'
+        // Should see digit or something else
         else if (this->state == State::AfterDecimal){
             if (std::isdigit(c)){
                 LOGC("NumberHandler/AfterDecimal: -> '", c, "'")
