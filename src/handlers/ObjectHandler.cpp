@@ -40,6 +40,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
     bool objEndReached = false;
     std::string key;
     Json::JsonVal val;
+    bool justStarted = true;
 
     LOGC("ObjectHandler: Starting Loop -> '", CharReader::getChar(), "'")
     while (!CharReader::fileEnd()){
@@ -56,10 +57,13 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
         // Deal with char based on state
         if (this->state == State::Start){ // If else vs switch? switch "break;" will be confused = will need scuffed workaround
 
-            // Current Char starts at '{'
-            // Increment to right after
-            CharReader::increment(); 
-            c = CharReader::getChar(); // Starts right after '{'
+            if (justStarted){
+                // Current Char starts at '{'
+                // Increment to right after
+                CharReader::increment(); 
+                c = CharReader::getChar(); // Starts right after '{'
+                justStarted = false;
+            }
 
             LOGC("ObjectHandler/Start: Just Got Char -> '", c, "'")
 
@@ -70,7 +74,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 continue;
             }
 
-            if (c == '"'){ // BUG: need to increment
+            if (c == '"'){ 
                 StringHandler sHandler;
                 key = sHandler.handle(); 
                 nextState();
@@ -106,6 +110,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
         else if (this->state == State::B4Val){
             LOGC("ObjectHandler/B4Val: B4Handle -> '", c, "'")
             val = HandlerHelper::handleAny(c);
+            nextState();
             LOGC("ObjectHandler/B4Val: AfterHandle -> '", CharReader::getChar(), "'")
         }
         else if (this->state == State::AfterVal){
@@ -133,6 +138,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 key = sHandler.handle(); 
                 nextState();
                 LOGC("ObjectHandler/AfterComma: AfterHandle -> '", CharReader::getChar(), "'")
+                LOG("ObjectHandler/AfterComma: Key Gotten -> \"" + key + "\"")
 
                 // Make sure key is not duplicate
                 if ((*object).find(key) != (*object).end()) {
