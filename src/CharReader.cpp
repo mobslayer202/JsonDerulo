@@ -14,6 +14,7 @@ void CharReader::init(const char* filePath){
     CharReader::jsonFStream = std::ifstream(filePath);
     CharReader::buffer = "";
     CharReader::index = 0;
+    pastEnd = false;
 }
 
 void CharReader::close(){ 
@@ -22,7 +23,7 @@ void CharReader::close(){
 }
 
 char CharReader::getChar(){
-
+    
     return buffer[index];
 }
 

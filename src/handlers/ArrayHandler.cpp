@@ -21,6 +21,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
     auto array = std::make_shared<std::vector<Json::JsonVal>>(); // Don't get what this does
 
     bool arrEndReached = false;
+    
     while (!CharReader::fileEnd()){
         
         // Current Char starts at '['
@@ -32,7 +33,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
         if (std::isspace(c)){ // Where is <cctype> even coming from...
             continue;
         }
-        std::cout << "ArrayHandler: '" << c << "'" << std::endl;
+        
         if (this->state == State::Start){
             if (c == ']'){
                 arrEndReached = true;
