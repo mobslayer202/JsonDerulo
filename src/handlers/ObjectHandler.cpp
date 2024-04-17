@@ -65,7 +65,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 continue;
             }
 
-            if (c == '"'){
+            if (c == '"'){ // BUG: need to increment
                 StringHandler sHandler;
                 key = sHandler.handle(); 
                 nextState();

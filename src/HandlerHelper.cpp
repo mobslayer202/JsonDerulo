@@ -55,5 +55,6 @@ Json::JsonVal HandlerHelper::handleAny(char c){
             std::string sawChar(1, c);
             throw std::invalid_argument("INVALID JSON: HandlerHelper -> '" + sawChar + "'"); 
     }
+    LOG("HandlerHelper: Finished")
     return result;
 }

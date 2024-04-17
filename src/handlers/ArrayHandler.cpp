@@ -8,20 +8,26 @@
 void ArrayHandler::nextState(){
     switch (this->state){
         case State::Start:
+            LOG("ArrayHandler: Start -> AfterElement")
             this->state = State::AfterElement;
             break;
         case State::AfterElement:
+            LOG("ArrayHandler: AfterElement -> AfterComma")
             this->state = State::AfterComma;
+            break;
         case State::AfterComma:
+            LOG("ArrayHandler: AfterComma -> AfterElement")
             this->state = State::AfterElement;
+            break;
     }
 }
+
 
 std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
     auto array = std::make_shared<std::vector<Json::JsonVal>>(); // Don't get what this does
 
     bool arrEndReached = false;
-    
+    bool justStarted = true;
     LOGC("ArrayHandler: starting loop -> '", CharReader::getChar(), "'")
     while (!CharReader::fileEnd()){
 
@@ -36,10 +42,13 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
         
         if (this->state == State::Start){
 
-            // Current Char starts at '['
-            // Increment to right after
-            CharReader::increment(); 
-            c = CharReader::getChar();
+            if (justStarted){
+                // Current Char starts at '['
+                // Increment to right after
+                CharReader::increment(); 
+                c = CharReader::getChar();
+                justStarted = false;
+            }
 
             LOGC("ArrayHandler/Start: Just Got Char -> '", c, "'")
 
@@ -69,6 +78,7 @@ std::shared_ptr<std::vector<Json::JsonVal>> ArrayHandler::handle(){
                 break;
             }
             else if (c == ','){
+                LOG("ArrayHandler/AfterElement: Going Next State")
                 nextState();
                 CharReader::increment(); 
             }

@@ -35,7 +35,7 @@ std::string StringHandler::handle(){
         // Increment to one char after '"'
         CharReader::increment(); 
         LOGC("StringHandler: Finished Char -> '", CharReader::getChar(), "'")
-        LOG("StringHandler: Finished ->" + seenString)
+        LOG("StringHandler: Finished -> '" + seenString + "'")
         return seenString;
     }
 }
