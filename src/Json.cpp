@@ -8,13 +8,16 @@
 #include "Json.hpp"
 #include "HandlerHelper.hpp"
 #include "CharReader.hpp"
+#include "RunSettings.hpp"
 
 Json::Json(const char* filePath){
 
+    LOG("Json: Starting Parse")
     CharReader::init(filePath);
     CharReader::increment(); // Put real data in buffer
     char c = CharReader::getChar(); // Breaks on empty file
     this->data = HandlerHelper::handleAny(c);
+    LOG("Json: Parse Completed!")
 }
 
 void Json::makeFile(const char* filePath){

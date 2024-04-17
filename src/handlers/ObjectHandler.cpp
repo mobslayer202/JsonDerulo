@@ -5,6 +5,7 @@
 #include "CharReader.hpp"
 #include "HandlerHelper.hpp"
 #include "StringHandler.hpp"
+#include "RunSettings.hpp"
 
 void ObjectHandler::nextState(){ // Shorten to casting increment way?
     switch(this->state){
@@ -35,12 +36,15 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
     std::string key;
     Json::JsonVal val;
 
+    LOGC("ObjectHandler: Starting Loop -> '", CharReader::getChar(), "'")
     while (!CharReader::fileEnd()){
         
         char c = CharReader::getChar();
 
         // Skip all spaces in object; none matter except in other data type(String)
         if (std::isspace(c)){ // Where is <cctype> even coming from...
+            LOGC("ObjectHandler: Continuing -> '", c, "'")
+            CharReader::increment(); 
             continue;
         }
 
@@ -52,10 +56,20 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
             CharReader::increment(); 
             c = CharReader::getChar(); // Starts right after '{'
 
+            LOGC("ObjectHandler/Start: Just Got Char -> '", c, "'")
+
+            // Skip all spaces in array; none matter except in other data type(String)
+            if (std::isspace(c)){ // Where is <cctype> even coming from...
+                LOGC("ObjectHandler/Start: Continuing -> '", c, "'")
+                CharReader::increment(); 
+                continue;
+            }
+
             if (c == '"'){
                 StringHandler sHandler;
                 key = sHandler.handle(); 
                 nextState();
+                LOG("ObjectHandler/Start: Key Gotten -> \"" + key + "\"")
 
                 // Make sure key is not duplicate
                 if ((*object).find(key) != (*object).end()) {
@@ -64,6 +78,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
                 }
             }
             else if (c == '}'){
+                LOG("ObjectHandler/Start: End Reached")
                 objEndReached = true;
                 break;
             }
@@ -73,6 +88,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
             }
         }
         else if (this->state == State::Colon){
+            LOGC("ObjectHandler/Colon: Char -> '", c, "'")
             if (c == ':'){
                 nextState();
                 CharReader::increment(); 
@@ -83,10 +99,13 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
             }
         }
         else if (this->state == State::B4Val){
+            LOGC("ObjectHandler/B4Val: B4Handle -> '", c, "'")
             val = HandlerHelper::handleAny(c);
+            LOGC("ObjectHandler/B4Val: AfterHandle -> '", c, "'")
         }
         else if (this->state == State::AfterVal){
 
+            LOGC("ObjectHandler/AfterVal: Char -> '", c, "'")
             (*object)[key] = val;
             if (c == ','){
                 nextState();
@@ -102,10 +121,14 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
             }
         }
         else if (this->state == State::AfterComma){
+
+            LOGC("ObjectHandler/AfterComma: Char -> '", c, "'")
             if (c == '"'){
                 StringHandler sHandler;
                 key = sHandler.handle(); 
                 nextState();
+                LOGC("ObjectHandler/AfterComma: AfterHandle -> '", c, "'")
+
                 // Make sure key is not duplicate
                 if ((*object).find(key) != (*object).end()) {
 
@@ -123,6 +146,7 @@ std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> ObjectHandler::h
         throw std::invalid_argument("INVALID JSON: end of file reached before object end");
     }
     else {
+        LOGC("ObjectHandler: Finishing -> '", CharReader::getChar(), "'")
         // Increment to one char after '}'
         CharReader::increment(); 
         return object;

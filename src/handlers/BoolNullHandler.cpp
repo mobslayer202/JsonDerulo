@@ -2,6 +2,7 @@
 
 #include "BoolNullHandler.hpp"
 #include "CharReader.hpp"
+#include "RunSettings.hpp"
 
 bool BoolNullHandler::handle(){
     std::string boolNullString;
@@ -20,20 +21,26 @@ bool BoolNullHandler::handle(){
             break;
     }
 
+    LOGC("BoolNullHandler: (first, expected) -> '", first, "' , '" + expected + "'")
+    LOG("BoolNullHandler: Starting loop")
+
     bool boolNullEndReached = false;
     short counter = 0;
     while (!CharReader::fileEnd()){
 
+        LOG("BoolNullHandler: Counter -> " + std::to_string(counter))
         if (counter == expected.size()){
             if (boolNullString == expected){ 
                 boolNullEndReached = true;
             }
+            LOGC("BoolNullHandler: End Reached -> '", boolNullEndReached, "' " + boolNullString)
             break;
         }
         
         char c = CharReader::getChar();
-        
         boolNullString += c;
+
+        LOGC("BoolNullHandler: Parsing -> '", c, "'")
 
         counter++;
         CharReader::increment();
@@ -54,6 +61,8 @@ bool BoolNullHandler::handle(){
         }
         // do nothing if null?
         
+        LOGC("BoolNullHandler: Finished Char -> '", CharReader::getChar(), "'")
+        LOGC("BoolNullHandler: Finished -> '", result, "'")
         return result;
     }
 }
