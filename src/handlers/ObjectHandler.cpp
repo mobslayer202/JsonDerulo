@@ -10,18 +10,23 @@
 void ObjectHandler::nextState(){ // Shorten to casting increment way?
     switch(this->state){
         case State::Start:
+            LOG("ObjectHandler: Start -> Colon")
             this->state = State::Colon;
             break;
         case State::Colon:
+            LOG("ObjectHandler: Colon -> B4Val")
             this->state = State::B4Val;
             break;
         case State::B4Val:
+            LOG("ObjectHandler: B4Val -> AfterVal")
             this->state = State::AfterVal;
             break;
         case State::AfterVal:
+            LOG("ObjectHandler: AfterVal -> AfterComma")
             this->state = State::AfterComma;
             break;
         case State::AfterComma:
+            LOG("ObjectHandler: AfterComma -> Colon")
             this->state = State::Colon;
             break;
     }

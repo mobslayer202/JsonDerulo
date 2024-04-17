@@ -7,12 +7,15 @@
 void NumberHandler::nextState(){
     switch (this->state){
         case State::Start:
+            LOG("NumberHandler: Start -> Normal")
             this->state = State::Normal;
             break;
         case State::Normal:
+            LOG("NumberHandler: Normal -> AfterNormal")
             this->state = State::AfterNormal;
             break;
         case State::AfterNormal:
+            LOG("NumberHandler: AfterNormal -> AfterDecimal")
             this->state = State::AfterDecimal;
             break;
     }
