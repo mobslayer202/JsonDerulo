@@ -31,7 +31,7 @@ Data structure idea:
 # Or a Tagged Union if that doesnt work
 # or without special variant ds?
 
-Initial brainstorm in Json.hpp file:
+Parser plan:
 // Tasks -----------------------------------------
 // - Detect Valid Json
 //      - valid data types in json
@@ -274,6 +274,51 @@ Handlers shall
 
 Idea 5: regex
 
+
+
+
+
+
+Json operations plan: Should have planned this first before parser
+[] only to be used for array or object
+    - used to get value
+    - can edit gotten value while its in the datastructure
+    - can make a new object and add key value pairs
+json[number] : get unwrapped-element& in array
+    - Json must contain a vector
+json["string"] : get unwrapped-value& in object
+    - Json must contain an unordered_map
+
+array.push_back(One of 7 types)
+
+(bool, double, int) basicVar = JsonVal
+
+Idea: don't expose JsonVal to user, as if they are working with unordered_map, vector, string, etc
+    - if they attempt to perform an operation which can only be done on one of those 3 on a JsonVal
+        - let the JsonVal perform those operations on the actual data structure
+    
+
+JsonVal will only ever be in top level, array element, or object value
+
+If I return a type which is not Json, i wont have control of the operation
+    - custom data structure? may be more work than using built in data structures
+
+
+var = json(string, number, bool or null) : set as (string, number, bool or null)
+
+operations:
+    to create new Json:
+        []
+        .push_back()
+        =
+    to get values from created Json:
+        []
+        =
+
+
+
+
+Output json datastructure to file plan
 
 
 

@@ -1,0 +1,9 @@
+Too annoying to type out all cpp file names in compilation command
+
+Don't want to have file paths in #include's
+
+
+Solutions:
+- Makefile
+- CMake
+- IDE

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Json.hpp"
 
 class NumberHandler{

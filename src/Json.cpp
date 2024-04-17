@@ -16,3 +16,8 @@ Json::Json(const char* filePath){
     char c = CharReader::getChar(); // Breaks on empty file
     this->data = HandlerHelper::handleAny(c);
 }
+
+void Json::makeFile(const char* filePath){
+    std::ofstream output("JsonExamples/result.json");
+    
+}

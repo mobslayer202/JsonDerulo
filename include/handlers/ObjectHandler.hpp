@@ -1,4 +1,6 @@
-#include <Json.hpp>
+#pragma once
+
+#include "Json.hpp"
 
 class ObjectHandler{
     public:

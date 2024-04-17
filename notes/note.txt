@@ -30,6 +30,27 @@ Allows it to be used "immediately": (MyEnum d = ++e;) - GPT
 The param makes it clear you incrementing MyEnum - GPT
     - FAKE NEWS, NO PARAM ALLOWED EXCEPT INT!!!
 
+Handlers should return types not JsonVal
+
+The only time JsonVal is used (to wrap data type) is in top level, array element, or object value
+When Handlers called on to get value they should return the unwrapped type
+    - Called in Object key (unwrapped string)
+    - Called in HandlerHelper.handleAny (unwrapped types to be wrapped in JsonVal)
+
+HandlerHelper.handleAny now is only thing which handles JsonVal as it should
+    - bc JsonVal is meant to hold any type
+    - handleAny() only thing that handles any type
+
+Handler structure mimics data structure
+    - handler for each data type
+    - handlerhelper to handle JsonVal 
+
+std::variant stores all possible data types as separate members
+    - more memory than union
+
+Don't put parenthesis to default-initialize
+    EX: ClassName objectName; 
+
 question:
 why isspace take int and return int? should take char and return bool no?
 why don't handle() functions red squiggly when no return?
