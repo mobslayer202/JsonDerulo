@@ -19,7 +19,7 @@ int main() {
     CharReader::close();
 
     Json d("JsonExamples/1.json");
-    //d.makeFile("JsonExamples/result.json");
+    d.makeFile("JsonExamples/result.json");
 
     
 

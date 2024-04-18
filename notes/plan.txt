@@ -323,7 +323,18 @@ operations:
 
 
 
-Output json datastructure to file plan
+Output json datastructure to file plan:
+    One function similar to HandlerHelper:
+        Takes in JsonVal and based on std::get_if, call handler to print respective type
+
+    string printer: print  string and tack quotes to the end
+    number printer: print number and take away decimal if it is .0
+    boolNull printer: print true, false, or null based on the value // may have to change way it is stored when parsed
+
+    Array printer: print bracket and then tab to print elements, each element will be on new line and one tab ahead
+    Object: print bracket and then tab to print elements, each element will be on new line and one tab ahead
+
+    Need to keep track of which tab level I am on
 
 
 
@@ -334,6 +345,8 @@ Logging system plan:
     Log every step of the parse
     Turn separate disabling for each handler?
     separate file to control the #if's
+
+    Have option to make logs log to file
 
 
 Better book keeping: for each handler state, explain clearly whats allowed and whats not
