@@ -20,7 +20,7 @@ void JsonPrinter::printJson(Json::JsonVal root, int tabLevel){
             else{
                 first = false;
             }
-            this->output << '"' << skey << '" : ';
+            this->output << '"' << skey << "\" : ";
             printJson(jVal, tabLevel+1);
         }
         // Right after last key,value pair printed

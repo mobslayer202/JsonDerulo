@@ -22,8 +22,8 @@ Json::Json(const std::string& filePath){
     JLOG("Json Constructor: Parse Completed!")
 }
 
-/*void Json::makeFile(const std::string& filePath){
+void Json::makeFile(const std::string& filePath){
     
     JsonPrinter jPrinter(filePath);
     jPrinter.printJson(data, 0);
-}*/
+}

@@ -1,7 +1,7 @@
 CXXFLAGS = -Iinclude -Iinclude/handlers # set include paths
 
-all: main.o CharReader.o HandlerHelper.o Json.o ArrayHandler.o BoolNullHandler.o NumberHandler.o ObjectHandler.o StringHandler.o # Target names not filepaths
-	g++ $(CXXFLAGS) obj/main.o obj/CharReader.o obj/HandlerHelper.o obj/Json.o obj/ArrayHandler.o obj/BoolNullHandler.o obj/NumberHandler.o obj/ObjectHandler.o obj/StringHandler.o -o output
+all: main.o CharReader.o HandlerHelper.o Json.o JsonPrinter.o ArrayHandler.o BoolNullHandler.o NumberHandler.o ObjectHandler.o StringHandler.o # Target names not filepaths
+	g++ $(CXXFLAGS) obj/main.o obj/CharReader.o obj/HandlerHelper.o obj/Json.o obj/JsonPrinter.o obj/ArrayHandler.o obj/BoolNullHandler.o obj/NumberHandler.o obj/ObjectHandler.o obj/StringHandler.o -o output
 
 main.o: main.cpp obj
 	g++ $(CXXFLAGS) -c main.cpp -o obj/main.o
@@ -14,6 +14,9 @@ HandlerHelper.o: src/HandlerHelper.cpp obj
 
 Json.o: src/Json.cpp obj
 	g++ $(CXXFLAGS) -c src/Json.cpp -o obj/Json.o
+
+JsonPrinter.o: src/JsonPrinter.cpp obj
+	g++ $(CXXFLAGS) -c src/JsonPrinter.cpp -o obj/JsonPrinter.o
 
 ArrayHandler.o: src/handlers/ArrayHandler.cpp obj
 	g++ $(CXXFLAGS) -c src/handlers/ArrayHandler.cpp -o obj/ArrayHandler.o
