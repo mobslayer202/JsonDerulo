@@ -4,7 +4,7 @@ class CharReader{
     public:
 
         // To be called at start of json, top level nesting of json file
-        static void init(const char* filePath);
+        static void init(const std::string& filePath);
         static void close();
         static char getChar(); // return char at current index
         static void increment(); // Increment index to location of next valid char

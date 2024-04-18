@@ -10,6 +10,7 @@ void JsonPrinter::printJson(Json::JsonVal root, int tabLevel){
         this->output << "{\n";
         indent(tabLevel+1);
 
+        // Right before first key,value pair printed
         bool first = true;
         for (const auto& [skey, jVal] : **value){ 
             if (!first){
@@ -22,11 +23,11 @@ void JsonPrinter::printJson(Json::JsonVal root, int tabLevel){
             this->output << '"' << skey << '" : ';
             printJson(jVal, tabLevel+1);
         }
+        // Right after last key,value pair printed
 
         this->output << "\n";
         indent(tabLevel);
         this->output << "}";
-
     }
     // array
     else if (auto value = std::get_if<std::shared_ptr<std::vector<Json::JsonVal>>>(&root.value)){ // Needs an address and not value?

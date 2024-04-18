@@ -9,7 +9,7 @@ std::string CharReader::buffer = "";
 int CharReader::index = 0;
 bool CharReader::pastEnd = false;
 
-void CharReader::init(const char* filePath){
+void CharReader::init(const std::string& filePath){
     
     CharReader::jsonFStream = std::ifstream(filePath);
     CharReader::buffer = "";

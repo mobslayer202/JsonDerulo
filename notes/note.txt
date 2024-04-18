@@ -51,6 +51,14 @@ std::variant stores all possible data types as separate members
 Don't put parenthesis to default-initialize
     EX: ClassName objectName; 
 
+Passing into parameter can be thought of as: 
+    func(parameterDecl){ // Definition
+        ...
+    }
+    func(myInput); // Call
+        ->
+    parameterDecl = myInput; // What happens
+
 question:
 why isspace take int and return int? should take char and return bool no?
 why don't handle() functions red squiggly when no return?

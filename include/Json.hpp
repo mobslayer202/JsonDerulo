@@ -27,9 +27,9 @@ class Json{
 
         
         //Json();
-        Json(const char* filePath);
+        Json(const std::string& filePath);
         //void printFormatted();
-        void makeFile(const char* filePath);
+        void makeFile(const std::string& filePath);
         //operator[]
 
         

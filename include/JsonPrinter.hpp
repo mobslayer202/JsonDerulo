@@ -4,11 +4,6 @@
 
 #include "Json.hpp"
 
-#define JSONVAL_ARR std::shared_ptr<std::vector<JsonVal>>
-#define JSONVAL_OBJ std::shared_ptr<std::unordered_map<std::string, JsonVal>>
-
-
-
 class JsonPrinter{
 
     public:
