@@ -66,7 +66,7 @@ void JsonPrinter::printJson(Json::JsonVal root, int tabLevel){
     }
     // bool or null
     else if (auto value = std::get_if<std::optional<bool>>(&root.value)){
-        if (value->has_value()){ // value is a pointer?
+        if (!value->has_value()){ // value is a pointer?
             this->output << "null";
         }
         else if (*value){
@@ -78,11 +78,11 @@ void JsonPrinter::printJson(Json::JsonVal root, int tabLevel){
     }
     // string
     else if (auto value = std::get_if<std::string>(&root.value)){
-        this->output << '"' << value << '"';
+        this->output << '"' << *value << '"';
     }
     // double
     else if (auto value = std::get_if<double>(&root.value)){
-        this->output << value;
+        this->output << *value;
     }
 }
 

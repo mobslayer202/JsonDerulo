@@ -1,7 +1,7 @@
 {
   "employee" : {
-    "married" : null,
-    "salary" : 0x7ffcff509580,
-    "name" : "0x7ffcff509580"
+    "married" : true,
+    "salary" : -56000,
+    "name" : "sonoo"
   }
 }
