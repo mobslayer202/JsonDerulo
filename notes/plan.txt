@@ -335,6 +335,13 @@ Output json datastructure to file plan:
     Object: print bracket and then tab to print elements, each element will be on new line and one tab ahead
 
     Need to keep track of which tab level I am on
+    If the whole array doesnt have array or object within it, print it on one line
+    Need to get around the way multiple file streams override file
+        - pass in file stream?
+
+    printType(JsonVal, tabLevel, fileStream)
+
+    Bool, null, double, string: No indent bc only care about indentations when child of Array or Object, Array or Object will handle indents
 
 
 

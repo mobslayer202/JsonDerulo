@@ -54,6 +54,7 @@ Don't put parenthesis to default-initialize
 question:
 why isspace take int and return int? should take char and return bool no?
 why don't handle() functions red squiggly when no return?
+for (arrIter; arrIter < (**value).end(); arrIter++){ // Why ++ and <? not .next() and !=
 
 Complexities:
 data structure to represent the Json is weird

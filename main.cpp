@@ -18,8 +18,8 @@ int main() {
     std::cout << "poopy\n";
     CharReader::close();
 
-    Json d("JsonExamples/1.json");
-    d.makeFile("JsonExamples/result.json");
+    Json d("JsonExamples/ventraSTS.json");
+    //d.makeFile("JsonExamples/result.json");
 
     
 

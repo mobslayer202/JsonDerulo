@@ -6,6 +6,7 @@
 #include <string>
 #include <memory>
 #include <optional>
+#include <fstream>
 
 class Json{
     public:
@@ -35,5 +36,4 @@ class Json{
 
     private:
         JsonVal data;
-
 };
