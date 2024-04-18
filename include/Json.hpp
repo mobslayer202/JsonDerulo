@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <optional>
 
 class Json{
     public:
@@ -15,7 +16,7 @@ class Json{
         // ^
         using jsonval = std::variant<std::shared_ptr<std::vector<JsonVal>>, 
             std::shared_ptr<std::unordered_map<std::string,JsonVal>>, 
-            bool,
+            std::optional<bool>,
             double, 
             std::string>;
         // ^

@@ -5,5 +5,5 @@
 class BoolNullHandler {
 
     public:
-        bool handle();
+        std::optional<bool> handle();
 };

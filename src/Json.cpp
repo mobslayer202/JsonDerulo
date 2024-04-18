@@ -4,6 +4,7 @@
 #include <string>
 #include <stack>
 #include <stdexcept>
+//#include <option>
 
 #include "Json.hpp"
 #include "HandlerHelper.hpp"
@@ -49,7 +50,7 @@ void Json::makeFile(const char* filePath){
 
     auto f = (*jsonMap2)["married"];
 
-    auto g = std::get<bool>(f.value);
-    std::cout << g << "\n";
+    auto g = std::get<std::optional<bool>>(f.value);
+    std::cout << g.value() << "\n";
 
 }

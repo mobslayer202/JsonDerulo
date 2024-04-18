@@ -4,7 +4,7 @@
 #include "CharReader.hpp"
 #include "RunSettings.hpp"
 
-bool BoolNullHandler::handle(){
+std::optional<bool> BoolNullHandler::handle(){
     std::string boolNullString;
     std::string expected;
 
@@ -50,7 +50,7 @@ bool BoolNullHandler::handle(){
         throw std::invalid_argument("INVALID JSON: illegal word, thought it was '"+expected+"' but its not"); // W operator overloading
     }
     else {
-        bool result;
+        std::optional<bool> result;
         if (expected == "true"){
 
             result = true;
@@ -58,6 +58,9 @@ bool BoolNullHandler::handle(){
         else if (expected == "false"){
 
             result = false;
+        }
+        else{
+            result = std::nullopt;
         }
         // do nothing if null?
         
