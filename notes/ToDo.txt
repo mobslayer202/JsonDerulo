@@ -1,0 +1,42 @@
+Make Json data type intuitive and seamless:
+    Can make your own Json from the ground up
+        - build by 
+            1. Calling empty constructor
+            2. Setting Json to one of the 6 types
+            3. If array or object, use the [] operator to set contents
+        - Problem: right now have to build Json from the leaves down to the root
+            - must define JsonVal at the end of the tree to define JsonVal at the branches to define the JsonVal root
+    Can retrieve data types seamlessly
+        - right now it has shared_ptr intermediary
+        - have to perform manual casting, operators don't do it
+
+Convert types into Macros:
+    Don't need to write a long type anymore
+        Object in jsonval variant: 
+            std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>>
+
+Separate printer and formatter?
+
+Use Regex for parsing
+
+Parse when user gets/sets a value in the json instead of doing it all up front
+    - might use regex
+    - uses less RAM
+
+Writing Comments for each file
+
+More testing and bug fixing
+    - Json::Json(filePath) will fail if first character is whitespace
+    - Make Json generator and tester?
+        - Can't use the same parsing/error detection algorithm to test and be tested
+
+Rename Handler to Parser
+
+Reorganize structure of code/project?
+
+CMake? Ninja?
+
+Come up with justification for repo name
+
+
+    

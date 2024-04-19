@@ -321,10 +321,15 @@ operations:
         =
 
 Operations usage:
-    (map, vect, string, bool, double) name = json["key"];
-    (map, vect, string, bool, double) name = json[0];
+    (map, vect, string, bool, double) name = json["key"]; 
+        - works but json is an unordered_map not JsonVal
+    (map, vect, string, bool, double) name = json[0]; 
+        - works but json is a vector not JsonVal
     json[0] = (map, vect, string, bool, double) name;
     json["key"] = (map, vect, string, bool, double) name;
+        - would need to make name a JsonVal
+            - need to make the Json from the leaves instead of from the root
+                "Need to define JsonVal in order to define vector in order to define JsonVal"
 
 Operations only done on JsonVal.value not JsonVal
 
