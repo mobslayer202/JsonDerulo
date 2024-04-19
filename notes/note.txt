@@ -59,6 +59,21 @@ Passing into parameter can be thought of as:
         ->
     parameterDecl = myInput; // What happens
 
+Recursive type definition in Json.hpp works. Parsing and printing are fine
+
+conversion operator approach, make like an actual json data structure: 
+Problem: other operators/functions do not cause casting, have to get intermediate Json::JsonVal and have to manually cast (std::string)
+std::unordered_map<std::string, Json::JsonVal> top2 = *topj; 
+    Don't work (*) dereference doesnt make it cast from shared_ptr to map
+Need to do this instead:
+    std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> topP = topj;
+    auto top = *topP;
+
+std::cout << top["name"] << "\n";
+    - top["name"] is a JsonVal value of 'top' unordered_map
+    - don't work, "bad variant access"
+    - 'std::cout << (std::string) top["name"] << "\n";' works
+
 question:
 why isspace take int and return int? should take char and return bool no?
 why don't handle() functions red squiggly when no return?

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <unordered_map>
 
 #include "CharReader.hpp"
 #include "Json.hpp"
@@ -18,9 +19,22 @@ int main() {
     std::cout << "poopy\n";
     CharReader::close();
 
-    Json d("JsonExamples/1.json");
-    d.makeFile("JsonOutput/result.json");
+    Json d("JsonExamples/2.json");
+    //d.makeFile("JsonOutput/v2.json");
+    Json::JsonVal topj = d;
+    std::shared_ptr<std::unordered_map<std::string, Json::JsonVal>> topP = topj;
+    std::unordered_map<std::string, Json::JsonVal> top = *topP;
 
+    Json::JsonVal nameVal = top["name"];
+    std::string nameVal1 = nameVal;
+
+    std::string nameVal2 = top["name"];
+
+    std::cout << nameVal2 << "\n";
+
+    std::cout << (std::string) top["name"] << "\n";
+    //std::unordered_map<std::string, Json::JsonVal> top2 = *topj; Don't work (*) dereference doesnt make it cast from shared ptr
+    
     
 
     //std::cout << sizeof(d) << std::endl;

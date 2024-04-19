@@ -320,6 +320,14 @@ operations:
         []
         =
 
+Operations usage:
+    (map, vect, string, bool, double) name = json["key"];
+    (map, vect, string, bool, double) name = json[0];
+    json[0] = (map, vect, string, bool, double) name;
+    json["key"] = (map, vect, string, bool, double) name;
+
+Operations only done on JsonVal.value not JsonVal
+
 
 
 
@@ -357,6 +365,17 @@ Logging system plan:
 
 
 Better book keeping: for each handler state, explain clearly whats allowed and whats not
+
+
+
+
+New way to parse: 
+    1. just say you parsed after calling parse() and return Json. 
+    2. Only actually parse when user accesses values. Json["key"]
+    - uses less RAM 
+    - can use regex?
+
+Replace jsonval variant types (std::shared_ptr<std::vector<Json::JsonVal>>) with macros to be cleaner
 
 
 Comments:
